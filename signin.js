@@ -43,7 +43,6 @@ forml.addEventListener('submit', async (e) => {
                 window.location.href = "chat.html" + queryString;
             } else {
                 alert('password wrong!')
-                forml.username.value = ''
                 forml.password.value = ''
             }
         });
