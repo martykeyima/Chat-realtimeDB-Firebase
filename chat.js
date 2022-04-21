@@ -19,23 +19,46 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+//รับค่า username
+var queryString = decodeURIComponent(window.location.search);
+queryString = queryString.substring(1);
+const username = (queryString.split('=')[1])
+
+//กล่อง chat
+const chat = document.getElementById('chat')
 
 //read
 const ul = document.getElementById('ul')
 const starCountRef = ref(db, 'users');
 onValue(starCountRef, (snapshot) => {
   const data = snapshot.val();
-  var lastKey = Object.keys(data).pop()
-  console.log(lastKey)
-  console.log(data)
-  for (const [key, value] of Object.entries(data)) {
-    if (key == lastKey) {
-      console.log(value.text);
-      const li = document.createElement('li')
-      li.innerText = value.text
-      ul.appendChild(li)
-    }
+  const obj = Object.entries(data).length
+  // var lastKey = Object.keys(data).pop()
+  // console.log('lastkey',lastKey)
+  const text = Object.entries(data)[obj - 1][1].text
+  const user = Object.entries(data)[obj - 1][1].username
+  console.log('text', text)
+  console.log('user', user)
+
+  const div = document.createElement('div')
+  const p = document.createElement('p')
+  const div2 = document.createElement('div');
+  p.innerText = text
+  if (user == username) {
+    div.className = 'right'
+    div2.className = 'right'
+  } else {
+    div.className = 'left'
+    div2.className = 'left'
   }
+  if (user != Object.entries(data)[obj - 2][1].username) {
+    const h4 = document.createElement('h4');
+    h4.innerText = user
+    div2.appendChild(h4)
+    chat.appendChild(div2)
+  }
+  div.appendChild(p)
+  chat.appendChild(div)
 
 });
 
@@ -43,26 +66,30 @@ onValue(starCountRef, (snapshot) => {
 const send = document.getElementById('send')
 const text = document.getElementById('text')
 send.addEventListener('click', async (e) => {
-  console.log(Date.now())
-  // writeUserData(Date.now(),'commy',"cookmeon")
-  writeUserData(Date.now(),text.value)
+  if (text.value == null || text.value.trim() === '') {
+    console.log('commy')
+  } else {
+    writeUserData(Date.now(), text.value, username)
+  }
   text.value = ''
 
 })
 
-text.addEventListener("keyup", function(event) {
-  console.log(Date.now())
-  // writeUserData(Date.now(),'commy',"cookmeon")
+text.addEventListener("keyup", function (event) {
   if (event.key === 'Enter') {
-    // code for enter
-    writeUserData(Date.now(),text.value)
+    if (text.value == null || text.value.trim() === '') {
+      console.log('commy')
+    } else {
+      writeUserData(Date.now(), text.value, username)
+    }
     text.value = ''
   }
 });
 
-function writeUserData(userId, text) {
+function writeUserData(userId, text, username) {
   const db = getDatabase();
   set(ref(db, 'users/' + userId), {
     text: text,
+    username: username
   });
 }

@@ -5,73 +5,156 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>read</title>
-    <script type="module" src="chat.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <title>Signin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="signin.js"></script>
 
     <style>
         body {
-            font-family: 'Kanit', sans-serif;
+            background-image: linear-gradient(117deg, rgba(123, 216, 96, 1) 39.2%, rgba(255, 255, 255, 1) 156.2%);
         }
+
         .container {
-            width: 960px;
             margin: 0 auto;
+            width: 900px;
             position: relative;
+        }
+
+        .login {
+            border-radius: 1rem;
+            margin-top: 20px;
             padding: 2rem;
-            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+            /* box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); */
+            position: absolute;
+            width: 100%;
         }
 
-        .chat {
-            /* padding: 2rem; */
-            border: 1px solid #ccc;
-        }
-
-        li {
-            font-size: 2rem;
-        }
-
-        li:nth-child(even) {
-            background-color: #ccc;
-        }
-
-        ul {
-            list-style: none;
+        .register {
+            border-radius: 1rem;
+            margin-top: 20px;
             padding: 2rem;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+            position: absolute;
+            width: 100%;
+            display: none;
         }
 
-        .input {
-            padding: 0.5rem;
-        }
-
-        input[type='text'] {
-            padding: 0.5rem;
-            outline: none;
-        }
-
-        #send {
-            padding: 0.5rem;
+        input {
+            padding: 10px;
             border: 1px solid #ccc;
+            /* outline: none; */
+            width: 97.5%;
+            transition: 0.3s;
+        }
+
+        input:hover {
+            transition: 0.3s;
+            border: 1px solid #333;
+        }
+
+        .btn2 {
+            display: flex;
+            justify-content: end;
+        }
+
+        button {
+            padding: .5rem 1rem;
             cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: white;
             transition: 0.3s;
         }
 
-        #send:hover {
+        button:hover {
+            background-color: white;
+            transition: 0.3s;
+        }
+        .btn22:hover{
             background-color: #ccc;
             transition: 0.3s;
+        }
+
+        .opacity {
+            background-color: #ccc;
+        }
+
+        .show {
+            position: relative;
+        }
+        #used{
+            padding: .5rem 1rem;
+            background-color: red;
+            color: white;
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: none;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <input id="text" type="text">
-        <button id="send">send</button>
-        <ul id="ul" class="chat">
-
-        </ul>
+        <div class="btn">
+            <button id="login">login</button>
+            <button id="regis"class="opacity">register</button>
+        </div>
+        <div class="show">
+            <div class="login">
+                <form id="login_form">
+                    <div class="group">
+                        <p>username</p>
+                        <input name="username" type="text" required>
+                    </div>
+                    <div class="group">
+                        <p>password</p>
+                        <input name="password" type="password" required>
+                    </div>
+                    <br>
+                    <div class="btn2">
+                        <button class="btn22" id="login_form_btn" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="register">
+                <form id="register_form">
+                    <div class="group" style="position: relative;">
+                        <p>username</p>
+                        <input id="re_username" name="username" type="text" required>
+                        <p id="used">username ใช้แล้ว</p>
+                    </div>
+                    <div class="group">
+                        <p>password</p>
+                        <input name="password" type="password" required>
+                    </div>
+                    <br>
+                    <div class="btn2">
+                        <button class="btn22" id="register_form_btn" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#regis").click(function () {
+                $(".login").hide();
+                $(".register").show(300);
+                document.getElementById('login').classList.add('opacity')
+                document.getElementById('regis').classList.remove('opacity')
+            });
+            $("#login").click(function () {
+                $(".register").hide();
+                $(".login").show(300);
+                document.getElementById('login').classList.remove('opacity')
+                document.getElementById('regis').classList.add('opacity')
+            });
+        });
+    </script>
 </body>
 
 </html>
