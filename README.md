@@ -1,3 +1,2 @@
 # chat-RealtimeDB-Firebase
-project url
-https://masterm-realtime-chat.netlify.app/
+project url https://masterm-realtime-chat.netlify.app/
